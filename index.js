@@ -73,11 +73,28 @@ async function run() {
         res.send(result)
     })
 
-    // update Toys
-    // app.patch('/addToys/:id', async(req, res) => {
-    //     const id  = req.params.id;
-    //     const filter 
-    // })
+    // Update Toys
+    app.patch('/myToys/:id', async(req, res) => {
+        const id  = req.params.id;
+        const filter = {_id: new ObjectId(id)};
+        const updateToys = req.body;
+        console.log(updateToys);
+        const updateDoc = {
+            $set: {
+                status: updateToys.status
+            },
+        }
+        const result = await addCollection.updateOne(filter, updateDoc);
+        res.send(result)
+    })
+
+    // Delete Toys
+    app.delete('/myToys/:id', async(req, res) => {
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await addCollection.deleteOne(query);
+        res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
