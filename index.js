@@ -29,6 +29,13 @@ async function run() {
     await client.connect();
 
     const toyCollection = client.db('eduLearn').collection('categories');
+    const addCollection = client.db('eduLearn').collection('categories');
+
+    // Sub category
+    app.get('allToys/:subCategory', async(req, res) => {
+        const result = await toyCollection.find({subCategory: req.params.subCategory}).toArray();
+        res.send(result)
+    })
 
     // all-toys
     app.get('/allToys', async(req, res) => {
@@ -48,17 +55,29 @@ async function run() {
         res.send(result)
     })
 
-    // add toy
-    app.post('/addToy', async(req, res) =>{
+    // my toys
+    app.get('/myToys/:email', async(req, res) => {
+        const result = await addCollection.find({sellerEmail: req.params.email}).toArray();
+        res.send(result)
+    })
+
+    // add toys
+    app.post('/addToys', async(req, res) =>{
         const body = req.body;
         if(!body){
             return res.status(404).send({message: "body data not found"})
         }
 
-        const result = await toyCollection.insertOne(body)
+        const result = await addCollection.insertOne(body)
         console.log(result)
         res.send(result)
     })
+
+    // update Toys
+    // app.patch('/addToys/:id', async(req, res) => {
+    //     const id  = req.params.id;
+    //     const filter 
+    // })
 
 
     // Send a ping to confirm a successful connection
