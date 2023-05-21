@@ -32,10 +32,10 @@ async function run() {
     const addCollection = client.db('eduLearn').collection('categories');
 
     // Sub category
-    app.get('allToys/:subCategory', async(req, res) => {
-        const result = await toyCollection.find({subCategory: req.params.subCategory}).toArray();
-        res.send(result)
-    })
+    // app.get('allToys/:subCategory', async(req, res) => {
+    //     const result = await toyCollection.find({subCategory: req.params.subCategory}).toArray();
+    //     res.send(result)
+    // })
 
     // all-toys
     app.get('/allToys', async(req, res) => {
